@@ -1,0 +1,4 @@
+io/flutter/plugins/GeneratedPluginRegistrant.java
+ io.flutter.plugins.GeneratedPluginRegistrant
+com/daput/pos_apps/BuildConfig.java
+ com.daput.pos_apps.BuildConfig
