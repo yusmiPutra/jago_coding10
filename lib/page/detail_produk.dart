@@ -145,7 +145,7 @@ class _DetailProdukState extends State<DetailProduk> {
                 textColor: Colors.white,
                 onPressed: () {
                   Navigator.push(context, MaterialPageRoute(builder: (_)=> CompleteTransaksi(
-                    totalItem, widget.e.idProduct, counter, widget.e.productPrice
+                    totalItem, counter, widget.e
                   )));
                 },
                 child: Padding(

@@ -3,10 +3,13 @@
 import 'package:flutter/material.dart';
 import 'package:pos_apps/page/print_bukti.dart';
 import 'package:pos_apps/res/res_get_transaksi.dart';
+import 'package:pos_apps/res/res_produk_kategori.dart';
 
 class PrintStruct extends StatefulWidget {
   final ResGetTransaksi? resGetTransaksi;
-  PrintStruct(this.resGetTransaksi);
+  final int? counter;
+  final Produk? e;
+  PrintStruct(this.resGetTransaksi, this.counter, this.e);
 
   @override
   _PrintStructState createState() => _PrintStructState();
@@ -58,7 +61,11 @@ class _PrintStructState extends State<PrintStruct> {
             padding: EdgeInsets.symmetric(horizontal: 32, vertical: 8),
             child: MaterialButton(
               onPressed: () {
-                Navigator.push(context, MaterialPageRoute(builder: (_)=> PrintBukti(widget.resGetTransaksi)));
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (_) => PrintBukti(
+                            widget.resGetTransaksi, widget.counter, widget.e)));
               },
               color: Colors.green,
               textColor: Colors.white,

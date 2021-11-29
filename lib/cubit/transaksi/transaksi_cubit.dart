@@ -27,6 +27,8 @@ class TransaksiCubit extends Cubit<TransaksiState> {
         Navigator.pushAndRemoveUntil(context,
             MaterialPageRoute(builder: (_) => MainMenu()), (route) => false);
         emit(TransaksiSuccess(resGetTransaksi));
+      } else {
+        emit(TransaksiFailed("Transaksi Gagal"));
       }
     } catch (e) {
       log('${e.toString()}');

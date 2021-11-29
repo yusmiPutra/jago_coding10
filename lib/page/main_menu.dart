@@ -1,7 +1,9 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:pos_apps/page/history_order.dart';
 import 'package:pos_apps/page/home_page.dart';
+import 'package:pos_apps/page/page_user.dart';
 
 class MainMenu extends StatefulWidget {
   @override
@@ -21,7 +23,7 @@ class _MainMenuState extends State<MainMenu> {
 
   @override
   void initState() {
-    pageOption = [HomePage(), HomePage(), HomePage()];
+    pageOption = [HomePage(), HistoryOrder(), PageUser()];
     super.initState();
   }
 

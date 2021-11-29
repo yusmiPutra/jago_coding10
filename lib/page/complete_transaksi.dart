@@ -6,15 +6,14 @@ import 'package:pos_apps/cubit/customer/customer_cubit.dart';
 import 'package:pos_apps/cubit/transaksi/transaksi_cubit.dart';
 import 'package:pos_apps/page/bottom_sheet_option.dart';
 import 'package:pos_apps/res/res_get_customer.dart';
+import 'package:pos_apps/res/res_produk_kategori.dart';
 
 class CompleteTransaksi extends StatefulWidget {
   final double? totalItem;
-  final int? idProduct;
   final int? counter;
-  final double? productPrice;
+  final Produk? e;
 
-  CompleteTransaksi(
-      this.totalItem, this.idProduct, this.counter, this.productPrice);
+  CompleteTransaksi(this.totalItem, this.counter, this.e);
 
   @override
   _CompleteTransaksiState createState() => _CompleteTransaksiState();
@@ -189,7 +188,22 @@ class _CompleteTransaksiState extends State<CompleteTransaksi> {
                 ),
                 Container(
                   alignment: Alignment.bottomCenter,
-                  child: BlocBuilder<TransaksiCubit, TransaksiState>(
+                  child: BlocConsumer<TransaksiCubit, TransaksiState>(
+                    listener: (context, state) {
+                      if (state is TransaksiSuccess) {
+                        showModalBottomSheet(
+                            context: context,
+                            builder: (context) {
+                              return PrintStruct(
+                                  cubitTransaksi?.resGetTransaksi,
+                                  widget.counter,
+                                  widget.e);
+                            });
+                      } else if (state is TransaksiFailed) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(content: Text("${state.message}")));
+                      }
+                    },
                     builder: (context, state) {
                       cubitTransaksi = context.read<TransaksiCubit>();
                       if (state is TransaksiLoading) {
@@ -203,23 +217,14 @@ class _CompleteTransaksiState extends State<CompleteTransaksi> {
                         height: 65,
                         textColor: Colors.white,
                         onPressed: () async {
-                          await cubitTransaksi
-                              ?.transaksi(
-                                  context,
-                                  idCustomer,
-                                  note.text,
-                                  widget.totalItem,
-                                  widget.idProduct,
-                                  widget.counter,
-                                  widget.productPrice)
-                              .then((value) async {
-                            await showModalBottomSheet(
-                                context: context,
-                                builder: (context) {
-                                  return PrintStruct(
-                                      cubitTransaksi?.resGetTransaksi);
-                                });
-                          });
+                          await cubitTransaksi?.transaksi(
+                              context,
+                              idCustomer,
+                              note.text,
+                              widget.totalItem,
+                              widget.e?.idProduct,
+                              widget.counter,
+                              widget.e?.productPrice);
                         },
                         child: Text('Complete Payment'),
                       );
